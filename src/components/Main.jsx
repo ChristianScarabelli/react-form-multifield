@@ -3,6 +3,19 @@ import { posts } from '../data/posts.js'
 import Tags from './Tags/Tags.jsx'
 import { useState } from 'react'
 
+// mi creo l'oggetto con i dati iniziali del form
+// che poi diventerà variabile di stato, per essere aggiornata con i dati ricevuti dal form
+
+const InitialFormData = {
+    title: '',
+    image: undefined,
+    author: '',
+    category: '',
+    content: '',
+    tags: [],
+    published: true,
+}
+
 export default function Main() {
     const uniqueTags = []
     for (const post of posts) { // per ogni post dell'array di oggetti posts
@@ -13,32 +26,50 @@ export default function Main() {
         }
     }
 
+    // variabile di stato per il form, con valore di partenza i campi vuoti
+    const [formData, setFormData] = useState(InitialFormData)
+
     const [post, setPost] = useState(posts)  // variabile di stato per aggiungere un nuovo post all'array originale
-    const [title, setTitle] = useState('')  // variabile per aggiungere il titolo del nuovo post
-    const [author, setAuthor] = useState('')  // variabile per aggiungere il nome dell'autore
-    const [workState, setWorkState] = useState(true)  // variabile per inserire lo stato di completamento dell'articolo
+
+    // funzione per gestire i campi del form
+    function handleFormData(event) {
+        const key = event.target.name  // elemento (dinamico) che genera l'input 
+        // const value = event.target.value // valore (dinamico) inserito nel form
+
+        // se l'elemento che da l'imput è di tipo checkbox, la imposto su checkata, altrimenti prendo il valore di testo inserito nel form
+        const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value
+
+        // Se il campo è 'tags', trasformo la stringa in un array
+        const newValue = key === 'tags' ? value.split(',').map(tag => tag.trim()) : value
+
+
+        // nuovo oggetto che contiene i campi del form di partenza 
+        // più gli imput dinamici del form
+        const newFormData = {
+            ...formData,
+            [key]: newValue,   // key va nelle graffe altrimenti verrebbe interpretato come una propiretà di nome key
+        }
+
+        // cambio la variabile di stato che contiene i dati di default del form
+        // con i nuovi dati presi in imput
+        setFormData(newFormData)
+    }
 
     // funzione per aggiungere il nuovo post (con le variabili di stato)
     function addNewPost(event) {        // disattivo la pagina che si aggiorna da sola
         event.preventDefault()
 
-        if (!title.trim() || !author.trim()) return
+        if (formData.title.trim() === '' || formData.author.trim() === '' || formData.content.trim() === '' || formData.category.trim() === '') return
 
         const newPost = {       // nuovo oggetto post
             id: Date.now(),
-            title: title.trim(),
-            author: author.trim(),
-            image: undefined,
-            content:
-                'Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit animi unde quasi enim non esse ratione voluptas voluptate, officiis veritatis magni blanditiis possimus nobis cum id inventore corporis deserunt hic.',
-            tags: [],
-            published: workState,
+            ...formData
         }
 
-        setPost([...post, newPost])     // aggiorno la variabile di stato con l'array originale e il nuovo post
-        setTitle('')        // svuoto i campi dopo il submit
-        setAuthor('')
-        setWorkState(false)
+        // aggiorno la variabile di stato con l'array originale e il nuovo post
+        setPost([...post, newPost])
+        // svuoto i campi dopo il submit, settando i dati iniziali (vuoti di default)
+        setFormData(InitialFormData)
     }
 
     // funzione per cancellare i post
@@ -54,50 +85,75 @@ export default function Main() {
                 <section className='posts_section'>
                     <div className='container'>
                         <h1 className='page-title'>Il mio blog</h1>
-                        <h3 className='form-title'>Crea un nuovo post</h3>
-                        <form onSubmit={addNewPost} className='form'>
-                            <input
-                                type="text"
-                                onChange={(event) => setTitle(event.target.value)}
-                                placeholder='Nuovo titolo'
-                                value={title} />
-                            <input
-                                type="text"
-                                onChange={(event) => setAuthor(event.target.value)}
-                                placeholder='Nome autore'
-                                value={author} />
-                            <input
-                                type="text"
 
-                                placeholder='Inserisci il contenuto'
-                            />
-                            <input
-                                className='input-image'
-                                type='image'
-                                alt='Inserisci immagine'
-                                src=''
-                            />
-                            <select
-                                className='select'
-                            >
-                                <option value="informatica" selected>Informatica</option>
-                                <option value='cinema'>Cinema</option>
-                                <option value='videogame'>Videogame</option>
-                            </select>
-                            <ul className='chekbox-list'>
-                                <li><input className='checkbox' type="checkbox" name="" id="html" />Html</li>
-                                <li><input className='checkbox' type="checkbox" name="" id="html" />Css</li>
-                                <li><input className='checkbox' type="checkbox" name="" id="html" />JavaScript</li>
-                                <li><input className='checkbox' type="checkbox" name="" id="html" />Php</li>
-                            </ul>
-                            {/* <select
-                                className='select'
-                                onChange={(event) => setWorkState(event.target.value === 'true')} // imposto il value come un valore boleano
-                                value={workState ? 'true' : 'false'}  // imposto true o false come valori possibili della variabile di stato
-                            >
-                                <option value="true">Pubblicato</option>
-                                <option value="false">Bozza</option>
-                            </select> */}
+                        <form onSubmit={addNewPost} className='form'>
+                            <h3 className='form-title'>Crea un nuovo post</h3>
+                            <div>
+                                <label htmlFor="title">Titolo</label>
+                                <input
+                                    id='title'
+                                    type="text"
+                                    onChange={handleFormData}
+                                    placeholder='Nuovo titolo'
+                                    value={formData.title}
+                                    name='title' />
+                            </div>
+                            <div>
+                                <label htmlFor="author">Autore</label>
+                                <input
+                                    id='author'
+                                    type="text"
+                                    onChange={handleFormData}
+                                    placeholder='Nome autore'
+                                    value={formData.author}
+                                    name='author' />
+                            </div>
+                            <div>
+                                <label htmlFor="content">Contenuto</label>
+                                <input
+                                    id='content'
+                                    type="text"
+                                    onChange={handleFormData}
+                                    placeholder='Inserisci il contenuto'
+                                    value={formData.content}
+                                    name='content' />
+                            </div>
+                            <div>
+                                <label htmlFor="image">Path immagine</label>
+                                <input
+                                    id='image'
+                                    className='input-image'
+                                    type='text'
+                                    placeholder='Inserisci il path immagine'
+                                    value={formData.image}
+                                    name='image' />
+                            </div>
+                            <div>
+                                <label htmlFor="category">Categoria</label>
+                                <select
+                                    id='category'
+                                    className='select'
+                                    value={formData.category}
+                                    name='category'
+                                    onChange={handleFormData}>
+                                    <option value="" selected>Seleziona una categoria</option>
+                                    <option value='informatica'>Informatica</option>
+
+                                    <option value='cinema'>Cinema</option>
+                                    <option value='videogame'>Videogame</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label htmlFor="tags">Tags</label>
+                                <input
+                                    id='tags'
+                                    type='text'
+                                    name='tags'
+                                    onChange={handleFormData}
+                                    placeholder='Inserisci i tag separati da virgola'
+                                    value={formData.tags.join(', ')} // Trasforma l'array di tag in una stringa
+                                />
+                            </div>
                             <input className='submit' type="submit" value='Aggiungi' />
                         </form>
                         <div className='tags_stripe'>
@@ -114,6 +170,7 @@ export default function Main() {
                                             title={post.title}
                                             tags={post.tags}
                                             author={post.author}
+                                            category={post.category}
                                             content={post.content}
                                             onDelete={() => deletePost(post.id)}
                                         />
