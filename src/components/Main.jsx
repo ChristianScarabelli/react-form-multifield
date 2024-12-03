@@ -157,6 +157,15 @@ export default function Main() {
                                     value={formData.tags.join(', ')} // Trasforma l'array di tag in una stringa
                                 />
                             </div>
+                            <div>
+                                <label htmlFor="publish">Da pubblicare</label>
+                                <input
+                                    type="checkbox"
+                                    name="published"
+                                    id="publish"
+                                    onChange={handleFormData}
+                                    value={formData.published} />
+                            </div>
                             <input className='submit' type="submit" value='Aggiungi' />
                         </form>
                         <div className='tags_stripe'>
