@@ -22,7 +22,7 @@ export default function Card({ title = '', image, content = '', tags = [], onDel
                         <p className={style.description}>{content}</p>
                         <div className={style.buttons}>
                             <Button />
-                            <DeleteButton onClick={onDelete = () => { }} />
+                            <DeleteButton onClick={onDelete} />
                         </div>
                     </div>
                 </div>

@@ -16,6 +16,8 @@ const InitialFormData = {
     published: true,
 }
 
+// esempio immagine https://store-images.s-microsoft.com/image/apps.50670.13727851868390641.c9cc5f66-aff8-406c-af6b-440838730be0.d205e025-5444-4eb1-ae46-571ae6895928?h=862&format=jpg
+
 export default function Main() {
     const uniqueTags = []
     for (const post of posts) { // per ogni post dell'array di oggetti posts
@@ -124,6 +126,7 @@ export default function Main() {
                                     id='image'
                                     className='input-image'
                                     type='text'
+                                    onChange={handleFormData}
                                     placeholder='Inserisci il path immagine'
                                     value={formData.image}
                                     name='image' />
