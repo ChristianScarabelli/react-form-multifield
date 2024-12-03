@@ -32,7 +32,13 @@ img {
 .page-title {
   text-align: center;
   font-weight: lighter;
+  font-size: 50px;
   padding: 1.2em 0 1.5em 0;
+}
+
+.form-title {
+  padding: 1.2em 50px 1.5em 0;
+  text-align: end;
 }
 
 main {
@@ -69,10 +75,13 @@ main {
   gap: 8px;
 }
 
+/* FORM  */
+
 .form {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  flex-wrap: wrap;
   gap: 15px;
   margin-bottom: 25px;
   padding-right: 50px;
@@ -93,11 +102,27 @@ main {
 }
 
 .submit,
-.select {
+.select,
+.chekbox-list,
+.input-image {
   color: grey;
   background-color: white;
 }
 
 .submit {
   background-color: rgb(211, 211, 211);
+}
+
+.input-image {
+  line-height: 1.3em;
+}
+
+.chekbox-list {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.checkbox {
+  margin-right: 5px;
 }

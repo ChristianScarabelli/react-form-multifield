@@ -16,7 +16,7 @@ export default function Main() {
     const [post, setPost] = useState(posts)  // variabile di stato per aggiungere un nuovo post all'array originale
     const [title, setTitle] = useState('')  // variabile per aggiungere il titolo del nuovo post
     const [author, setAuthor] = useState('')  // variabile per aggiungere il nome dell'autore
-    const [workState, setWorkState] = useState(false)  // variabile per inserire lo stato di completamento dell'articolo
+    const [workState, setWorkState] = useState(true)  // variabile per inserire lo stato di completamento dell'articolo
 
     // funzione per aggiungere il nuovo post (con le variabili di stato)
     function addNewPost(event) {        // disattivo la pagina che si aggiorna da sola
@@ -54,9 +54,7 @@ export default function Main() {
                 <section className='posts_section'>
                     <div className='container'>
                         <h1 className='page-title'>Il mio blog</h1>
-                        <div className='tags_stripe'>
-                            < Tags tags={uniqueTags} />
-                        </div>
+                        <h3 className='form-title'>Crea un nuovo post</h3>
                         <form onSubmit={addNewPost} className='form'>
                             <input
                                 type="text"
@@ -68,16 +66,43 @@ export default function Main() {
                                 onChange={(event) => setAuthor(event.target.value)}
                                 placeholder='Nome autore'
                                 value={author} />
+                            <input
+                                type="text"
+
+                                placeholder='Inserisci il contenuto'
+                            />
+                            <input
+                                className='input-image'
+                                type='image'
+                                alt='Inserisci immagine'
+                                src=''
+                            />
                             <select
+                                className='select'
+                            >
+                                <option value="informatica" selected>Informatica</option>
+                                <option value='cinema'>Cinema</option>
+                                <option value='videogame'>Videogame</option>
+                            </select>
+                            <ul className='chekbox-list'>
+                                <li><input className='checkbox' type="checkbox" name="" id="html" />Html</li>
+                                <li><input className='checkbox' type="checkbox" name="" id="html" />Css</li>
+                                <li><input className='checkbox' type="checkbox" name="" id="html" />JavaScript</li>
+                                <li><input className='checkbox' type="checkbox" name="" id="html" />Php</li>
+                            </ul>
+                            {/* <select
                                 className='select'
                                 onChange={(event) => setWorkState(event.target.value === 'true')} // imposto il value come un valore boleano
                                 value={workState ? 'true' : 'false'}  // imposto true o false come valori possibili della variabile di stato
                             >
                                 <option value="true">Pubblicato</option>
                                 <option value="false">Bozza</option>
-                            </select>
+                            </select> */}
                             <input className='submit' type="submit" value='Aggiungi' />
                         </form>
+                        <div className='tags_stripe'>
+                            < Tags tags={uniqueTags} />
+                        </div>
                     </div>
                     <div className='container'>
                         {publishedPosts.length ? ( // Se ci sono post
