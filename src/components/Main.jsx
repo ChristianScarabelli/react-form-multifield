@@ -1,7 +1,7 @@
 import Card from './Card/Card.jsx'
 import { posts } from '../data/posts.js'
 import Tags from './Tags/Tags.jsx'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 // mi creo l'oggetto con i dati iniziali del form
 // che poi diventerà variabile di stato, per essere aggiornata con i dati ricevuti dal form
@@ -13,7 +13,7 @@ const InitialFormData = {
     category: '',
     content: '',
     tags: [],
-    published: true,
+    published: false,
 }
 
 // esempio immagine https://store-images.s-microsoft.com/image/apps.50670.13727851868390641.c9cc5f66-aff8-406c-af6b-440838730be0.d205e025-5444-4eb1-ae46-571ae6895928?h=862&format=jpg
@@ -32,6 +32,13 @@ export default function Main() {
     const [formData, setFormData] = useState(InitialFormData)
 
     const [post, setPost] = useState(posts)  // variabile di stato per aggiungere un nuovo post all'array originale
+
+    // reagisco allo spuntare la checkbox del pubblicare un nuovo articolo su un oggetto di stato
+    useEffect(() => {
+        if (formData.published) {
+            alert('l\'articolo verrà pubblicato')
+        }
+    }, [formData.published])
 
     // funzione per gestire i campi del form
     function handleFormData(event) {
@@ -141,7 +148,6 @@ export default function Main() {
                                     onChange={handleFormData}>
                                     <option value="" selected>Seleziona una categoria</option>
                                     <option value='informatica'>Informatica</option>
-
                                     <option value='cinema'>Cinema</option>
                                     <option value='videogame'>Videogame</option>
                                 </select>
@@ -164,7 +170,8 @@ export default function Main() {
                                     name="published"
                                     id="publish"
                                     onChange={handleFormData}
-                                    value={formData.published} />
+                                    // per le checkbox si usa checked e non value
+                                    checked={formData.published} />
                             </div>
                             <input className='submit' type="submit" value='Aggiungi' />
                         </form>
