@@ -16,8 +16,8 @@ export default function Card({ title = '', image, content = '', tags = [], onDel
                     </figure>
                     <div className={style.body}>
                         <h3 className={style.title}>{title}</h3>
-                        {author && <h4>{`Autore: ${author}`}</h4>}
-                        {category && <h5>{`Categoria: ${category}`}</h5>}
+                        {author && <h4 className={style.author}>{`Autore: ${author}`}</h4>}
+                        {category && <h5 className={style.category}>{`Categoria: ${category}`}</h5>}
                         < Tags tags={tags} />
                         <p className={style.description}>{content}</p>
                         <div className={style.buttons}>

@@ -94,12 +94,12 @@ export default function Main() {
                 <section className='posts_section'>
                     <div className='container'>
                         <h1 className='page-title'>Il mio blog</h1>
-
+                        <h3 className='form-title'>Crea un nuovo post</h3>
                         <form onSubmit={addNewPost} className='form'>
-                            <h3 className='form-title'>Crea un nuovo post</h3>
                             <div>
                                 <label htmlFor="title">Titolo</label>
                                 <input
+                                    className='input'
                                     id='title'
                                     type="text"
                                     onChange={handleFormData}
@@ -110,6 +110,7 @@ export default function Main() {
                             <div>
                                 <label htmlFor="author">Autore</label>
                                 <input
+                                    className='input'
                                     id='author'
                                     type="text"
                                     onChange={handleFormData}
@@ -120,6 +121,7 @@ export default function Main() {
                             <div>
                                 <label htmlFor="content">Contenuto</label>
                                 <input
+                                    className='input'
                                     id='content'
                                     type="text"
                                     onChange={handleFormData}
@@ -131,7 +133,7 @@ export default function Main() {
                                 <label htmlFor="image">Path immagine</label>
                                 <input
                                     id='image'
-                                    className='input-image'
+                                    className='input'
                                     type='text'
                                     onChange={handleFormData}
                                     placeholder='Inserisci il path immagine'
@@ -142,7 +144,7 @@ export default function Main() {
                                 <label htmlFor="category">Categoria</label>
                                 <select
                                     id='category'
-                                    className='select'
+                                    className='input select'
                                     value={formData.category}
                                     name='category'
                                     onChange={handleFormData}>
@@ -155,6 +157,7 @@ export default function Main() {
                             <div>
                                 <label htmlFor="tags">Tags</label>
                                 <input
+                                    className='input'
                                     id='tags'
                                     type='text'
                                     name='tags'
@@ -166,6 +169,7 @@ export default function Main() {
                             <div>
                                 <label htmlFor="publish">Da pubblicare</label>
                                 <input
+                                    className='input checkbox'
                                     type="checkbox"
                                     name="published"
                                     id="publish"
@@ -173,7 +177,7 @@ export default function Main() {
                                     // per le checkbox si usa checked e non value
                                     checked={formData.published} />
                             </div>
-                            <input className='submit' type="submit" value='Aggiungi' />
+                            <input className='input submit' type="submit" value='Aggiungi' />
                         </form>
                         <div className='tags_stripe'>
                             < Tags tags={uniqueTags} />

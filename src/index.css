@@ -87,42 +87,32 @@ main {
   padding-right: 50px;
 }
 
-.form>* {
+.input,
+.input.select,
+.input.checkbox,
+.input.submit {
   padding: 4px 8px;
   border: 1px solid gray;
   border-radius: 4px;
   font-size: 0.875rem;
-  font-weight: bold;
+  margin-left: 10px;
 }
 
-.form>*:hover {
-  border: 1px solid rgb(194, 193, 243);
-  color: rgb(134, 133, 170);
-  cursor: pointer;
+.input.checkbox {
+  margin-left: 5px;
 }
 
-.submit,
-.select,
-.chekbox-list,
-.input-image {
-  color: grey;
+.input.select {
   background-color: white;
+  color: grey;
 }
 
-.submit {
-  background-color: rgb(211, 211, 211);
+.input.submit {
+  background-color: rgb(231, 227, 227);
 }
 
-.input-image {
-  line-height: 1.3em;
-}
-
-.chekbox-list {
-  display: flex;
-  justify-content: space-between;
-  gap: 15px;
-}
-
-.checkbox {
-  margin-right: 5px;
+.input:hover {
+  cursor: pointer;
+  color: rgb(134, 133, 170);
+  border-color: rgb(194, 193, 243);
 }
