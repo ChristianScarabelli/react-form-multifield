@@ -48,7 +48,7 @@ export default function Main() {
         // se l'elemento che da l'imput è di tipo checkbox, la imposto su checkata, altrimenti prendo il valore di testo inserito nel form
         const value = event.target.type === 'checkbox' ? event.target.checked : event.target.value
 
-        // Se il campo è 'tags', trasformo la stringa in un array
+        // Variabile = a key, ma se key uguale a 'tags', separo con virgola e trasformo la stringa in un array, altrimenti metto value normale
         const newValue = key === 'tags' ? value.split(',').map(tag => tag.trim()) : value
 
 
@@ -93,7 +93,6 @@ export default function Main() {
             <main>
                 <section className='posts_section'>
                     <div className='container'>
-                        <h1 className='page-title'>Il mio blog</h1>
                         <h3 className='form-title'>Crea un nuovo post</h3>
                         <form onSubmit={addNewPost} className='form'>
                             <div>
@@ -120,10 +119,9 @@ export default function Main() {
                             </div>
                             <div>
                                 <label htmlFor="content">Contenuto</label>
-                                <input
+                                <textarea
                                     className='input'
                                     id='content'
-                                    type="text"
                                     onChange={handleFormData}
                                     placeholder='Inserisci il contenuto'
                                     value={formData.content}
@@ -179,6 +177,7 @@ export default function Main() {
                             </div>
                             <input className='input submit' type="submit" value='Aggiungi' />
                         </form>
+                        <h1 className='page-title'>Il mio blog</h1>
                         <div className='tags_stripe'>
                             < Tags tags={uniqueTags} />
                         </div>
